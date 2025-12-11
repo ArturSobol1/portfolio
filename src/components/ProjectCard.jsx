@@ -5,9 +5,13 @@ import {
   Text,
   UnorderedList,
   ListItem,
+  Tag,
+  Flex,
 } from "@chakra-ui/react";
 
 export default function ProjectCard({
+  emoji = "🛠️",
+  badge,
   title,
   role,
   timeframe,
@@ -24,28 +28,40 @@ export default function ProjectCard({
       display="flex"
       flexDirection="column"
       height="100%"
+      transition="all 0.2s ease"
       _hover={{
-        boxShadow: "md",
-        transform: "translateY(-2px)",
-        transition: "all 0.15s ease-out",
+        boxShadow: "lg",
+        transform: "translateY(-3px)",
       }}
     >
-      {role && (
-        <Text
-          fontSize="xs"
-          textTransform="uppercase"
-          letterSpacing="wide"
-          color="gray.500"
-          mb={1}
+      {/* Top section: Emoji + Title Row */}
+      <Flex align="center" mb={2} gap={3}>
+        <Box
+          w={10}
+          h={10}
+          borderRadius="full"
+          bg="gray.100"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          fontSize="xl"
         >
-          {role}
-        </Text>
+          {emoji}
+        </Box>
+
+        <Heading as="h3" fontSize="lg">
+          {title}
+        </Heading>
+      </Flex>
+
+      {/* Category pill (role badge) */}
+      {badge && (
+        <Box mb={3}>
+          {badge}
+        </Box>
       )}
 
-      <Heading as="h3" fontSize="lg" mb={1}>
-        {title}
-      </Heading>
-
+      {/* Time + Location */}
       {(timeframe || location) && (
         <Text fontSize="sm" color="gray.500" mb={2}>
           {timeframe}
@@ -54,6 +70,7 @@ export default function ProjectCard({
         </Text>
       )}
 
+      {/* Tech Stack */}
       {tech && (
         <Text fontSize="xs" color="gray.600" mb={3}>
           <Text as="span" fontWeight="semibold">
@@ -63,6 +80,7 @@ export default function ProjectCard({
         </Text>
       )}
 
+      {/* Bullet Points */}
       {bullets.length > 0 && (
         <UnorderedList spacing={1} fontSize="sm" color="gray.800" ml={4}>
           {bullets.map((item) => (
